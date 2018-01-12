@@ -1,0 +1,53 @@
+<h2>Show Card</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @card.name %>
+  </li>
+
+  <li>
+    <strong>Number Owned:</strong>
+    <%= @card.number_owned %>
+  </li>
+
+  <li>
+    <strong>Colors:</strong>
+    <%= @card.colors %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @card.type %>
+  </li>
+
+  <li>
+    <strong>Oracle Text:</strong>
+    <%= @card.oracle_text %>
+  </li>
+
+  <li>
+    <strong>Flavor Text:</strong>
+    <%= @card.flavor_text %>
+  </li>
+
+  <li>
+    <strong>Power:</strong>
+    <%= @card.power %>
+  </li>
+
+  <li>
+    <strong>Toughness:</strong>
+    <%= @card.toughness %>
+  </li>
+
+  <li>
+    <strong>Set Name:</strong>
+    <%= @card.set_name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: card_path(@conn, :edit, @card) %></span>
+<span><%= link "Back", to: card_path(@conn, :index) %></span>

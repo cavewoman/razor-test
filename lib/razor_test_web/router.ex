@@ -43,6 +43,7 @@ defmodule RazorTestWeb.Router do
   scope "/", RazorTestWeb do
     pipe_through :protected
     get "/", PageController, :index
+    resources "/cards", CardController
   end
 
   # Other scopes may use custom stacks.
