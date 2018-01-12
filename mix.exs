@@ -21,7 +21,7 @@ defmodule RazorTest.Mixfile do
   def application do
     [mod: {RazorTest.Application, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :gettext,
-                    :phoenix_ecto, :postgrex],
+                    :phoenix_ecto, :postgrex, :httpoison],
      extra_applications: [:logger, :runtime_tools, :coherence]]
   end
 
@@ -46,6 +46,7 @@ defmodule RazorTest.Mixfile do
       {:wallaby, "~> 0.19.2", only: :test},
       {:ex_machina, "~> 2.1", only: :test},
       {:coherence, "~> 0.5"},
+      {:httpoison, "~> 0.12"}
    ]
   end
 

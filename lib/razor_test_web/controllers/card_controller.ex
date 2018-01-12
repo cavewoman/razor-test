@@ -15,7 +15,12 @@ defmodule RazorTestWeb.CardController do
   end
 
   def create(conn, %{"card" => card_params}) do
-    case Users.create_card(card_params) do
+    IO.puts "CARD PARAMS"
+    newThing = Map.put(card_params, "colors", ["blue"])
+    |> Map.put("type", "The Best")
+    IO.inspect newThing
+    getInfo("testing")
+    case Users.create_card(newThing) do
       {:ok, card} ->
         conn
         |> put_flash(:info, "Card created successfully.")
@@ -56,5 +61,15 @@ defmodule RazorTestWeb.CardController do
     conn
     |> put_flash(:info, "Card deleted successfully.")
     |> redirect(to: card_path(conn, :index))
+  end
+
+  defp getInfo(name) do
+    url_name = name |> String.downcase() |> String.replace(" ", "+")
+    url = "https://api.scryfall.com/cards/named?exact=#{url_name}"
+
+    response = HTTPoison.get!(url)
+    req = Poison.decode!(response.body)
+    IO.puts "RESPONSE BODY!!!!"
+    IO.inspect req["set_name"]
   end
 end
