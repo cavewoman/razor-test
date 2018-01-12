@@ -20,6 +20,7 @@ defmodule RazorTestWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import RazorTestWeb.Router.Helpers
+      import RazorTest.AuthTestHelper
 
       # The default endpoint for testing
       @endpoint RazorTestWeb.Endpoint

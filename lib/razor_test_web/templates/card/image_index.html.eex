@@ -1,0 +1,4 @@
+<%= for card <- @cards do %>
+  <a href="<%= card_path(@conn, :show, card)%>">
+  <img src="<%= card.small_image_uri %>" class="image-index-image">
+<% end %>
