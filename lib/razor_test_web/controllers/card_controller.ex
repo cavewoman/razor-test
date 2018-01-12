@@ -9,23 +9,27 @@ defmodule RazorTestWeb.CardController do
     render(conn, "index.html", cards: cards)
   end
 
+  def image_index(conn, _params) do
+    cards = Users.list_cards()
+    render(conn, "image_index.html", cards: cards)
+  end
+
   def new(conn, _params) do
     changeset = Users.change_card(%Card{})
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"card" => card_params}) do
-    IO.puts "CARD PARAMS"
-    newThing = Map.put(card_params, "colors", ["blue"])
-    |> Map.put("type", "The Best")
-    IO.inspect newThing
-    getInfo("testing")
-    case Users.create_card(newThing) do
+    updated_params = updated_params(card_params)
+    IO.puts("UPDATED PARAMS")
+    IO.inspect(updated_params)
+    case Users.create_card(updated_params) do
       {:ok, card} ->
         conn
         |> put_flash(:info, "Card created successfully.")
         |> redirect(to: card_path(conn, :show, card))
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
         render(conn, "new.html", changeset: changeset)
     end
   end
@@ -63,13 +67,44 @@ defmodule RazorTestWeb.CardController do
     |> redirect(to: card_path(conn, :index))
   end
 
-  defp getInfo(name) do
+  defp get_info(name) do
     url_name = name |> String.downcase() |> String.replace(" ", "+")
     url = "https://api.scryfall.com/cards/named?exact=#{url_name}"
 
     response = HTTPoison.get!(url)
-    req = Poison.decode!(response.body)
-    IO.puts "RESPONSE BODY!!!!"
-    IO.inspect req["set_name"]
+    Poison.decode!(response.body)
+  end
+
+  defp updated_params(params) do
+    info = get_info(params["name"])
+    params
+      |> Map.put("colors", info["colors"])
+      |> Map.put("multiverse_ids", info["multiverse_ids"])
+      |> Map.put("scryfall_json_uri", info["uri"])
+      |> Map.put("scryfall_uri", info["scryfall_uri"])
+      |> Map.put("type", info["type_line"])
+      |> Map.put("flavor_text", info["flavor_text"])
+      |> Map.put("oracle_text", info["oracle_text"])
+      |> Map.put("mana_cost", info["mana_cost"])
+      |> Map.put("set_name", info["set_name"])
+      |> Map.put("rulings_uri", info["rulings_uri"])
+      |> Map.put("rarity", info["rarity"])
+      |> Map.put("small_image_uri", info["image_uris"]["small"])
+      |> Map.put("normal_image_uri", info["image_uris"]["normal"])
+      |> Map.put("large_image_uri", info["image_uris"]["large"])
+      |> Map.put("png_image_uri", info["image_uris"]["png"])
+      |> Map.put("art_crop_image_uri", info["image_uris"]["art_crop"])
+      |> Map.put("border_crop_image_uri", info["image_uris"]["border_crop"])
+      |> maybeAddPowerAndToughness(info)
+  end
+
+  defp maybeAddPowerAndToughness(params, info) do
+    if (info["power"]) do
+      params
+        |> Map.put("power", Integer.parse(info["power"]))
+        |> Map.put("toughness", Integer.parse(info["toughness"]))
+    else
+      params
+    end
   end
 end

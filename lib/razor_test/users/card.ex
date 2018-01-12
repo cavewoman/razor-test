@@ -7,7 +7,7 @@ defmodule RazorTest.Users.Card do
   schema "cards" do
     field :name, :string
     field :colors, {:array, :string}
-    field :multiverse_ids, {:array, :string}
+    field :multiverse_ids, {:array, :integer}
     field :number_owned, :integer
     field :scryfall_json_uri, :string
     field :scryfall_uri, :string
@@ -34,7 +34,7 @@ defmodule RazorTest.Users.Card do
   def changeset(%Card{} = card, attrs) do
     card
     |> cast(attrs, [:name,
-    :colors, 
+    :colors,
     :multiverse_ids,
     :number_owned,
     :scryfall_json_uri,

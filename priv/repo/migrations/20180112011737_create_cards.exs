@@ -5,7 +5,7 @@ defmodule RazorTest.Repo.Migrations.CreateCards do
     create table(:cards) do
       add :name, :string
       add :colors, {:array, :string}
-      add :multiverse_ids, {:array, :string}
+      add :multiverse_ids, {:array, :integer}
       add :number_owned, :integer
       add :scryfall_json_uri, :string
       add :scryfall_uri, :string

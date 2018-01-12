@@ -1,53 +1,54 @@
-<h2>Show Card</h2>
+<h2 class="card-title"><%= @card.name %></h2>
+<span><%= link "Back", to: card_path(@conn, :index), class: "card-back btn btn-default" %></span>
 
-<ul>
+<div class="card-container">
+  <div class="image-container">
+    <img src="<%= @card.normal_image_uri %>">
+  </div>
+  <div class="info-container">
+    <ul>
+      <li>
+        <strong>Number Owned:</strong>
+        <%= @card.number_owned %>
+      </li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @card.name %>
-  </li>
+      <li>
+        <strong>Colors:</strong>
+        <%= @card.colors %>
+      </li>
 
-  <li>
-    <strong>Number Owned:</strong>
-    <%= @card.number_owned %>
-  </li>
+      <li>
+        <strong>Type:</strong>
+        <%= @card.type %>
+      </li>
 
-  <li>
-    <strong>Colors:</strong>
-    <%= @card.colors %>
-  </li>
+      <li>
+        <strong>Oracle Text:</strong>
+        <%= @card.oracle_text %>
+      </li>
 
-  <li>
-    <strong>Type:</strong>
-    <%= @card.type %>
-  </li>
+      <li>
+        <strong>Flavor Text:</strong>
+        <%= @card.flavor_text %>
+      </li>
 
-  <li>
-    <strong>Oracle Text:</strong>
-    <%= @card.oracle_text %>
-  </li>
+      <li>
+        <strong>Power:</strong>
+        <%= @card.power %>
+      </li>
 
-  <li>
-    <strong>Flavor Text:</strong>
-    <%= @card.flavor_text %>
-  </li>
+      <li>
+        <strong>Toughness:</strong>
+        <%= @card.toughness %>
+      </li>
 
-  <li>
-    <strong>Power:</strong>
-    <%= @card.power %>
-  </li>
+      <li>
+        <strong>Set Name:</strong>
+        <%= @card.set_name %>
+      </li>
 
-  <li>
-    <strong>Toughness:</strong>
-    <%= @card.toughness %>
-  </li>
-
-  <li>
-    <strong>Set Name:</strong>
-    <%= @card.set_name %>
-  </li>
-
-</ul>
+    </ul>
+  </div>
+</div>
 
 <span><%= link "Edit", to: card_path(@conn, :edit, @card) %></span>
-<span><%= link "Back", to: card_path(@conn, :index) %></span>

@@ -17,7 +17,7 @@
   <tbody>
 <%= for card <- @cards do %>
     <tr>
-      <td><%= card.name %></td>
+      <td><%= link card.name, to: card_path(@conn, :show, card) %></td>
       <td><%= card.colors %></td>
       <td><%= card.type %></td>
       <td><%= card.number_owned %></td>
