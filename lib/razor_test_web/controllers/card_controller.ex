@@ -21,8 +21,6 @@ defmodule RazorTestWeb.CardController do
 
   def create(conn, %{"card" => card_params}) do
     updated_params = updated_params(card_params)
-    IO.puts("UPDATED PARAMS")
-    IO.inspect(updated_params)
     case Users.create_card(updated_params) do
       {:ok, card} ->
         conn
@@ -101,8 +99,8 @@ defmodule RazorTestWeb.CardController do
   defp maybeAddPowerAndToughness(params, info) do
     if (info["power"]) do
       params
-        |> Map.put("power", Integer.parse(info["power"]))
-        |> Map.put("toughness", Integer.parse(info["toughness"]))
+        |> Map.put("power", String.to_integer(info["power"]))
+        |> Map.put("toughness", String.to_integer(info["toughness"]))
     else
       params
     end
