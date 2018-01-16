@@ -26,6 +26,7 @@ defmodule RazorTest.Users.Card do
     field :png_image_uri, :string
     field :art_crop_image_uri, :string
     field :border_crop_image_uri, :string
+    belongs_to :user, RazorTest.Coherence.User
 
     timestamps()
   end
@@ -33,7 +34,9 @@ defmodule RazorTest.Users.Card do
   @doc false
   def changeset(%Card{} = card, attrs) do
     card
-    |> cast(attrs, [:name,
+    |> cast(attrs, [
+    :user_id,
+    :name,
     :colors,
     :multiverse_ids,
     :number_owned,

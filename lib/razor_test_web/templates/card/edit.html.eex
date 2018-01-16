@@ -2,4 +2,4 @@
 
 <%= render "form.html", Map.put(assigns, :action, card_path(@conn, :update, @card)) %>
 
-<span><%= link "Back", to: card_path(@conn, :index) %></span>
+<span><%= link "Back", to: card_path(@conn, :index, @requested_user) %></span>

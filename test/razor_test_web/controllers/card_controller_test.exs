@@ -14,21 +14,21 @@ defmodule RazorTestWeb.CardControllerTest do
 
   describe "index" do
     test "lists all cards", %{conn: conn} do
-      conn = get conn, card_path(conn, :index)
+      conn = get conn, card_path(conn, :index, @requested_user)
       assert html_response(conn, 200) =~ "Listing Cards"
     end
   end
 
   describe "new card" do
     test "renders form", %{conn: conn} do
-      conn = get conn, card_path(conn, :new)
+      conn = get conn, card_path(conn, :new, @requested_user)
       assert html_response(conn, 200) =~ "New Card"
     end
   end
 
   describe "create card" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, card_path(conn, :create), card: @create_attrs
+      conn = post conn, card_path(conn, :create, @requested_user), card: @create_attrs
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == card_path(conn, :show, id)
@@ -38,7 +38,7 @@ defmodule RazorTestWeb.CardControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, card_path(conn, :create), card: @invalid_attrs
+      conn = post conn, card_path(conn, :create, @requested_user), card: @invalid_attrs
       assert html_response(conn, 200) =~ "New Card"
     end
   end
@@ -74,7 +74,7 @@ defmodule RazorTestWeb.CardControllerTest do
 
     test "deletes chosen card", %{conn: conn, card: card} do
       conn = delete conn, card_path(conn, :delete, card)
-      assert redirected_to(conn) == card_path(conn, :index)
+      assert redirected_to(conn) == card_path(conn, :index, @requested_user)
       assert_error_sent 404, fn ->
         get conn, card_path(conn, :show, card)
       end

@@ -35,4 +35,4 @@
   </tbody>
 </table>
 
-<span><%= link "New Card", to: card_path(@conn, :new) %></span>
+<span><%= link "New Card", to: card_path(@conn, :new, @requested_user) %></span>

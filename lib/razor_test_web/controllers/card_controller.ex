@@ -4,6 +4,11 @@ defmodule RazorTestWeb.CardController do
   alias RazorTest.Users
   alias RazorTest.Users.Card
 
+  import RazorTest.Controllers.Helpers.AuthHelper
+
+  plug :assign_requested_user
+  plug :authorize_current_user
+
   def index(conn, _params) do
     cards = Users.list_cards()
     render(conn, "index.html", cards: cards)
@@ -62,7 +67,7 @@ defmodule RazorTestWeb.CardController do
 
     conn
     |> put_flash(:info, "Card deleted successfully.")
-    |> redirect(to: card_path(conn, :index))
+    |> redirect(to: card_path(conn, :index, @requested_user))
   end
 
   defp get_info(name) do

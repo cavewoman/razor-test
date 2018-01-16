@@ -3,11 +3,12 @@ defmodule RazorTest.Coherence.User do
   use Ecto.Schema
   use Coherence.Schema
 
-  
+
 
   schema "users" do
     field :name, :string
     field :email, :string
+    has_many :campaigns, RazorTest.Users.Card, on_delete: :delete_all
     coherence_schema()
 
     timestamps()

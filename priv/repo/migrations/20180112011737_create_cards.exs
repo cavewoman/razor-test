@@ -3,6 +3,7 @@ defmodule RazorTest.Repo.Migrations.CreateCards do
 
   def change do
     create table(:cards) do
+      add :user_id, references(:users, on_delete: :delete_all)
       add :name, :string
       add :colors, {:array, :string}
       add :multiverse_ids, {:array, :integer}
@@ -27,6 +28,7 @@ defmodule RazorTest.Repo.Migrations.CreateCards do
 
       timestamps()
     end
+    create index(:cards, [:user_id])
     create unique_index(:cards, [:name])
   end
 end

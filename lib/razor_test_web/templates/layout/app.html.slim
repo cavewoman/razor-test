@@ -28,8 +28,8 @@ html lang="en"
                      = @current_user.email
                      b.caret
                      ul.dropdown-menu
-                       li =link "Cards - (List)", to: card_path(@conn, :index)
-                       li =link "Cards - (Images)", to: card_path(@conn, :image_index)
+                       li =link "Cards - (List)", to: card_path(@conn, :index, @requested_user)
+                       li =link "Cards - (Images)", to: card_path(@conn, :image_index, @requested_user)
                        li =link "Sign Out", to: session_path(@conn, :delete), method: :delete
                - else
                  li =link "sign in", to: session_path(@conn, :new)
