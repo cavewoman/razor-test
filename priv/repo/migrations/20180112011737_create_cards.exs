@@ -7,11 +7,12 @@ defmodule RazorTest.Repo.Migrations.CreateCards do
       add :colors, {:array, :string}
       add :multiverse_ids, {:array, :integer}
       add :number_owned, :integer
+      add :number_wanted, :integer
       add :scryfall_json_uri, :string
       add :scryfall_uri, :string
       add :type, :string
-      add :flavor_text, :string
-      add :oracle_text, :string
+      add :flavor_text, :text
+      add :oracle_text, :text
       add :mana_cost, :string
       add :power, :integer
       add :toughness, :integer

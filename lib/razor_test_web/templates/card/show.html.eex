@@ -13,6 +13,11 @@
       </li>
 
       <li>
+        <strong>Number Wanted:</strong>
+        <%= @card.number_wanted %>
+      </li>
+
+      <li>
         <strong>Colors:</strong>
         <%= @card.colors %>
       </li>

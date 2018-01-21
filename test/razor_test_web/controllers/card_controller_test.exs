@@ -27,7 +27,7 @@ defmodule RazorTestWeb.CardControllerTest do
   describe "index" do
     test "lists all cards", %{conn: conn} do
       conn = get conn, card_path(conn, :index)
-      assert html_response(conn, 200) =~ "Listing Cards"
+      assert html_response(conn, 200) =~ "Cards"
     end
   end
 

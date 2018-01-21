@@ -2,6 +2,11 @@
     color: $gray-light;
 }
 
+.navbar-header {
+  display: inline-block;
+  float: right;
+}
+
 .card-container {
   clear: both;
   margin-top: 1em;
@@ -22,4 +27,12 @@
 
 .card-title {
   display: inline;
+}
+
+.cards-header-title {
+  display: inline-block;
+}
+
+.btn-new-card {
+  float: right;
 }

@@ -9,6 +9,7 @@ defmodule RazorTest.Cards.Card do
     field :colors, {:array, :string}
     field :multiverse_ids, {:array, :integer}
     field :number_owned, :integer
+    field :number_wanted, :integer
     field :scryfall_json_uri, :string
     field :scryfall_uri, :string
     field :type, :string
@@ -37,6 +38,7 @@ defmodule RazorTest.Cards.Card do
     :colors,
     :multiverse_ids,
     :number_owned,
+    :number_wanted,
     :scryfall_json_uri,
     :scryfall_uri,
     :type,
