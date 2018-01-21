@@ -98,7 +98,7 @@ defmodule RazorTest.Cards do
       %Ecto.Changeset{source: %Card{}}
 
   """
-  def change_card(%Card{} = card) do
-    Card.changeset(card, %{})
+  def change_card(%Card{} = card, user) do
+    Card.changeset(card, %{user_id: user.id})
   end
 end

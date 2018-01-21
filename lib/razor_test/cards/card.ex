@@ -27,6 +27,7 @@ defmodule RazorTest.Cards.Card do
     field :png_image_uri, :string
     field :art_crop_image_uri, :string
     field :border_crop_image_uri, :string
+    belongs_to :user, RazorTest.Coherence.User
 
     timestamps()
   end
@@ -55,8 +56,9 @@ defmodule RazorTest.Cards.Card do
     :large_image_uri,
     :png_image_uri,
     :art_crop_image_uri,
-    :border_crop_image_uri
+    :border_crop_image_uri,
+    :user_id
     ])
-    |> validate_required([:name])
+    |> validate_required([:name, :user_id])
   end
 end

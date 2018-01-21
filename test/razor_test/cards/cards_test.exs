@@ -3,20 +3,27 @@ defmodule RazorTest.CardsTest do
 
   alias RazorTest.Cards
 
+  import RazorTest.Factory
+
   describe "cards" do
     alias RazorTest.Cards.Card
 
-    @valid_attrs %{name: "some name", type: "some type"}
-    @update_attrs %{name: "some updated name", type: "some updated type"}
     @invalid_attrs %{name: nil, type: nil}
 
     def card_fixture(attrs \\ %{}) do
-      {:ok, card} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Cards.create_card()
+      user = insert(:user)
+      card_fixture_with_user(attrs, user)
+    end
 
-      card
+    def card_fixture_with_user(attrs \\ %{}, user) do
+      user
+      |> Ecto.build_assoc(:cards,
+                     build(:card,
+                           %{
+                             name: "some name",
+                             type: "some type" ,
+                           }))
+      |> Repo.insert!()
     end
 
     test "list_cards/0 returns all cards" do
@@ -30,7 +37,11 @@ defmodule RazorTest.CardsTest do
     end
 
     test "create_card/1 with valid data creates a card" do
-      assert {:ok, %Card{} = card} = Cards.create_card(@valid_attrs)
+      user = insert(:user)
+      user
+      |> Ecto.build_assoc(:cards)
+      changeset = %{name: "some name", type: "some type", user_id: user.id}
+      assert {:ok, card} = Cards.create_card(changeset)
       assert card.name == "some name"
       assert card.type == "some type"
     end
@@ -40,11 +51,13 @@ defmodule RazorTest.CardsTest do
     end
 
     test "update_card/2 with valid data updates the card" do
-      card = card_fixture()
-      assert {:ok, card} = Cards.update_card(card, @update_attrs)
+      user = insert(:user)
+      card = card_fixture_with_user(user)
+      update_attrs = %{name: "updated name", type: "updated type"}
+      assert {:ok, card} = Cards.update_card(card, update_attrs)
       assert %Card{} = card
-      assert card.name == "some updated name"
-      assert card.type == "some updated type"
+      assert card.name == "updated name"
+      assert card.type == "updated type"
     end
 
     test "update_card/2 with invalid data returns error changeset" do
@@ -60,8 +73,9 @@ defmodule RazorTest.CardsTest do
     end
 
     test "change_card/1 returns a card changeset" do
-      card = card_fixture()
-      assert %Ecto.Changeset{} = Cards.change_card(card)
+      user = insert(:user)
+      card = card_fixture_with_user(user)
+      assert %Ecto.Changeset{} = Cards.change_card(card, user)
     end
   end
 end

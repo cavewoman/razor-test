@@ -6,6 +6,7 @@ defmodule RazorTest.Coherence.User do
   schema "users" do
     field :name, :string
     field :email, :string
+    has_many :cards, RazorTest.Cards.Card, on_delete: :delete_all
     coherence_schema()
 
     timestamps()

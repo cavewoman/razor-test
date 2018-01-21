@@ -17,7 +17,7 @@ defmodule RazorTest.Factory do
           password_confirmation: "password",
           password_hash: Comeonin.Bcrypt.hashpwsalt("password")}
   end
-
+  
   def card_factory do
     %Card{name: "Island",
           number_owned: 3,

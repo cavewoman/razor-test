@@ -1,5 +1,5 @@
 <h2 class="card-title"><%= @card.name %></h2>
-<span><%= link "Back", to: card_path(@conn, :index), class: "card-back btn btn-default" %></span>
+<span><%= link "Back", to: card_path(@conn, :index, @user), class: "card-back btn btn-default" %></span>
 
 <div class="card-container">
   <div class="image-container">
@@ -56,4 +56,4 @@
   </div>
 </div>
 
-<span><%= link "Edit", to: card_path(@conn, :edit, @card) %></span>
+<span><%= link "Edit", to: card_path(@conn, :edit, @user, @card) %></span>

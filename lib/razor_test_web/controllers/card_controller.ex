@@ -3,65 +3,93 @@ defmodule RazorTestWeb.CardController do
 
   alias RazorTest.Cards
   alias RazorTest.Cards.Card
+  alias RazorTest.Repo
 
+  import RazorTest.Controllers.Helpers.AuthHelper
+  import Ecto.Query, warn: false
+
+  plug :assign_requested_user
   def index(conn, _params) do
-    cards = Cards.list_cards()
-    render(conn, "index.html", cards: cards)
+    user = conn.assigns[:requested_user]
+
+    cards =
+      user
+      |> Ecto.assoc(:cards)
+      |> Ecto.Query.order_by(desc: :name)
+      |> Repo.all()
+    render conn, "index.html", cards: cards, user: user
   end
 
   def image_index(conn, _params) do
-    cards = Cards.list_cards()
-    render(conn, "image_index.html", cards: cards)
+    user = conn.assigns[:requested_user]
+    cards =
+      user
+      |> Ecto.assoc(:cards)
+      |> Ecto.Query.order_by(desc: :name)
+      |> Repo.all()
+    render(conn, "image_index.html", cards: cards, user: user)
   end
 
   def new(conn, _params) do
-    changeset = Cards.change_card(%Card{})
-    render(conn, "new.html", changeset: changeset)
+    user = conn.assigns[:requested_user]
+
+    changeset =
+      user
+      |> Ecto.build_assoc(:cards)
+      |> Cards.change_card(%Card{})
+    render conn, "new.html", changeset: changeset, user: user
   end
 
   def create(conn, %{"card" => card_params}) do
-    updated_params = updated_params(card_params)
+    user = conn.assigns[:requested_user]
+    updated_params = updated_params(card_params, user)
     case Cards.create_card(updated_params) do
       {:ok, card} ->
         conn
         |> put_flash(:info, "Card created successfully.")
-        |> redirect(to: card_path(conn, :show, card))
+        |> redirect(to: card_path(conn, :show, user, card))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, user: user)
     end
   end
 
   def show(conn, %{"id" => id}) do
-    card = Cards.get_card!(id)
-    render(conn, "show.html", card: card)
+    user = conn.assigns[:requested_user]
+    card = Repo.get!(Ecto.assoc(user, :cards), id)
+    render(conn, "show.html", card: card, user: user)
   end
 
   def edit(conn, %{"id" => id}) do
-    card = Cards.get_card!(id)
-    changeset = Cards.change_card(card)
-    render(conn, "edit.html", card: card, changeset: changeset)
+    user = conn.assigns[:requested_user]
+
+    card = Repo.get!(Ecto.assoc(user, :cards), id)
+    changeset = Cards.change_card(card, user)
+    render(conn, "edit.html", card: card, changeset: changeset, user: user)
   end
 
   def update(conn, %{"id" => id, "card" => card_params}) do
     card = Cards.get_card!(id)
-
+    user = conn.assigns[:requested_user]
+    card = Repo.get!(Ecto.assoc(user, :cards), id)
     case Cards.update_card(card, card_params) do
       {:ok, card} ->
         conn
         |> put_flash(:info, "Card updated successfully.")
-        |> redirect(to: card_path(conn, :show, card))
+        |> redirect(to: card_path(conn, :show, user, card))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", card: card, changeset: changeset)
+        render(conn, "edit.html", card: card, changeset: changeset, user: user)
     end
   end
 
   def delete(conn, %{"id" => id}) do
     card = Cards.get_card!(id)
+    user = conn.assigns[:requested_user]
+    card = Repo.get!(Ecto.assoc(user, :cards), id)
     {:ok, _card} = Cards.delete_card(card)
 
     conn
     |> put_flash(:info, "Card deleted successfully.")
-    |> redirect(to: card_path(conn, :index))
+    |> redirect(to: card_path(conn, :index, user))
   end
 
   defp get_info(name) do
@@ -72,10 +100,11 @@ defmodule RazorTestWeb.CardController do
     Poison.decode!(response.body)
   end
 
-  defp updated_params(params) do
+  defp updated_params(params, user) do
     if params["name"] do
       info = get_info(params["name"])
       params
+        |> Map.put("user_id", user.id)
         |> Map.put("colors", info["colors"])
         |> Map.put("multiverse_ids", info["multiverse_ids"])
         |> Map.put("scryfall_json_uri", info["uri"])
