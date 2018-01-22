@@ -3,6 +3,8 @@ defmodule RazorTest.Coherence.User do
   use Ecto.Schema
   use Coherence.Schema
 
+
+
   schema "users" do
     field :name, :string
     field :email, :string

@@ -37,5 +37,11 @@ config :coherence,
   router: RazorTestWeb.Router,
   messages_backend: RazorTestWeb.Coherence.Messages,
   logged_out_url: "/",
-  opts: [:authenticatable]
+  email_from_name: "Deck Box",
+  email_from_email: "anna.sherman365@gmail.com",
+  opts: [:authenticatable, :recoverable, :lockable, :trackable, :unlockable_with_token, :registerable]
+
+config :coherence, RazorTestWeb.Coherence.Mailer,
+  adapter: Swoosh.Adapters.Sendgrid,
+  api_key: {:system, "SENDGRID_API_KEY"}
 # %% End Coherence Configuration %%
