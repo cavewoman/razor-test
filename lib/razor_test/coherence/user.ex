@@ -4,11 +4,12 @@ defmodule RazorTest.Coherence.User do
   use Coherence.Schema
 
 
-
+  @derive {Poison.Encoder, except: [:__meta__]}
   schema "users" do
     field :name, :string
     field :email, :string
-    has_many :cards, RazorTest.Cards.Card, on_delete: :delete_all
+    has_many :cards, RazorTest.Cards.Card
+    has_many :decks, RazorTest.Decks.Deck
     coherence_schema()
 
     timestamps()

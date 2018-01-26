@@ -1,0 +1,43 @@
+<div class="deck-header">
+  <h2 class="deck-title deck-header-item"><%= @deck.name %></h2>
+  <a href="<%= deck_path(@conn, :edit, @user, @deck) %>"  class="edit-icon deck-header-item">
+      <img src="<%= static_path(@conn, "/images/edit-icon.png") %>"/>
+  </a>
+</div>
+
+<div class="deck-scores">
+  <div class="deck-wins score-container">
+    <div class="number-of-wins score">
+      <%= @deck.wins %>
+    </div>
+    <div class="score-label">
+      Wins
+    </div>
+  </div>
+  <div class="deck-losses score-container">
+    <div class="number-of-lossess score">
+      <%= @deck.losses %>
+    </div>
+    <div class="score-label">
+      Losses
+    </div>
+  </div>
+</div>
+
+<div class="deck-comments">
+  <%= @deck.comments %>
+</div>
+
+<%= render "add_card_form.html", cards: @cards %>
+
+<div class="deck-cards-container">
+  <%= for card <- @deck_cards do %>
+    <a href="<%= card_path(@conn, :show, @user, card)%>">
+    <img src="<%= card.small_image_uri %>" class="image-index-image">
+  <% end %>
+</div>
+
+<div>
+  <span><%= link "Edit", to: deck_path(@conn, :edit, @user, @deck) %></span>
+  <span><%= link "Back", to: deck_path(@conn, :index, @user) %></span>
+</div>

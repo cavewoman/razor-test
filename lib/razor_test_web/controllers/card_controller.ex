@@ -17,6 +17,7 @@ defmodule RazorTestWeb.CardController do
       |> Ecto.assoc(:cards)
       |> Ecto.Query.order_by(desc: :name)
       |> Repo.all()
+
     render conn, "index.html", cards: cards, user: user
   end
 
@@ -68,7 +69,6 @@ defmodule RazorTestWeb.CardController do
   end
 
   def update(conn, %{"id" => id, "card" => card_params}) do
-    card = Cards.get_card!(id)
     user = conn.assigns[:requested_user]
     card = Repo.get!(Ecto.assoc(user, :cards), id)
     case Cards.update_card(card, card_params) do
@@ -82,7 +82,6 @@ defmodule RazorTestWeb.CardController do
   end
 
   def delete(conn, %{"id" => id}) do
-    card = Cards.get_card!(id)
     user = conn.assigns[:requested_user]
     card = Repo.get!(Ecto.assoc(user, :cards), id)
     {:ok, _card} = Cards.delete_card(card)

@@ -46,7 +46,8 @@ defmodule RazorTest.Mixfile do
       {:wallaby, "~> 0.19.2", only: :test},
       {:ex_machina, "~> 2.1", only: :test},
       {:coherence, "~> 0.5"},
-      {:httpoison, "~> 0.12"}
+      {:httpoison, "~> 0.12"},
+      {:json, "~> 1.0"}
    ]
   end
 

@@ -1,0 +1,58 @@
+.deck-header {
+  display: flex;
+
+  .deck-header-item {
+    flex: 1;
+  }
+
+  .deck-title {
+    flex: 35;
+  }
+
+}
+
+.deck-scores {
+  display: flex;
+  .score-container {
+    flex: 1;
+    color: white;
+    padding: 2em;
+
+    .score {
+      font-size: 63px;
+      text-align: center;
+    }
+
+    .score-label {
+      text-align: center;
+    }
+  }
+  .deck-wins {
+    background-color: #939f5c;
+  }
+
+  .deck-losses {
+    background-color: #98473e;
+  }
+}
+
+.deck-comments {
+  font-size: 25px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.add-card-container {
+  display: flex;
+  margin-bottom: 2em;
+
+  .card-select {
+    flex: 8;
+    margin-right: 1em;
+  }
+
+  .add-card-to-deck-btn {
+    flex: 1;
+  }
+
+}

@@ -1,0 +1,32 @@
+<h2>Listing Decks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Wins</th>
+      <th>Losses</th>
+      <th>Comments</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for deck <- @decks do %>
+    <tr>
+      <td><%= deck.name %></td>
+      <td><%= deck.wins %></td>
+      <td><%= deck.losses %></td>
+      <td><%= deck.comments %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: deck_path(@conn, :show, @user, deck), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: deck_path(@conn, :edit, @user, deck), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: deck_path(@conn, :delete, @user, deck), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Deck", to: deck_path(@conn, :new, @user) %></span>

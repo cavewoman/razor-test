@@ -3,7 +3,7 @@ defmodule RazorTest.Cards.Card do
   import Ecto.Changeset
   alias RazorTest.Cards.Card
 
-
+  @derive {Poison.Encoder, except: [:__meta__]}
   schema "cards" do
     field :name, :string
     field :colors, {:array, :string}
@@ -28,6 +28,8 @@ defmodule RazorTest.Cards.Card do
     field :art_crop_image_uri, :string
     field :border_crop_image_uri, :string
     belongs_to :user, RazorTest.Coherence.User
+
+    many_to_many :decks, RazorTest.Decks.Deck, join_through: "card_decks"
 
     timestamps()
   end

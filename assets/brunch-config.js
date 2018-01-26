@@ -49,7 +49,8 @@ exports.config = {
       // bootstrap-sass' JavaScript requires both '$' and 'jQuery' in global scope
       $: "jquery",
       jQuery: "jquery",
-      bootstrap: "bootstrap-sass" // require bootstrap-sass' JavaScript globally
+      bootstrap: "bootstrap-sass", // require bootstrap-sass' JavaScript globally
+      _: "lodash"
     }
   }
 };

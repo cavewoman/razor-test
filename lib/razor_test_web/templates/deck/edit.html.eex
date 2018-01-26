@@ -1,0 +1,16 @@
+<h2>Edit Deck</h2>
+
+<%= render "form.html", Map.put(assigns, :action, deck_path(@conn, :update, @user, @deck)) %>
+
+<%= render "add_card_form.html", cards: @cards %>
+
+<div class="deck-cards-container">
+  <%= for card <- @deck_cards do %>
+    <a href="<%= card_path(@conn, :show, @user, card)%>">
+    <img src="<%= card.small_image_uri %>" class="image-index-image">
+  <% end %>
+</div>
+
+<div>
+  <span><%= link "Back", to: deck_path(@conn, :index, @user) %></span>
+</div>
