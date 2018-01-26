@@ -1,3 +1,5 @@
 .jumbotron
   h2
     = link "Cards", to: card_path(@conn, :index, @user)
+  h2
+    = link "Decks", to: deck_path(@conn, :index, @user)

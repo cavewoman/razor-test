@@ -19,7 +19,12 @@ html lang="en"
               span.icon-bar
               span.icon-bar
               span.icon-bar
-          a.navbar-brand href="/" Deck Box
+          a.navbar-brand href="/"
+              img src="#{static_path(@conn, "/images/home-icon.png")}"
+          = if @current_user do
+            .card-nav.navbar-brand =link "My Cards", to: card_path(@conn, :index, @current_user)
+            .card-image-nav.navbar-brand =link "Card Images", to: card_path(@conn, :image_index, @current_user)
+            .deck-nav.navbar-brand =link "My Decks", to: deck_path(@conn, :index, @current_user)
           .collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
                = if @current_user do
@@ -28,8 +33,9 @@ html lang="en"
                      = @current_user.email
                      b.caret
                      ul.dropdown-menu
-                       li =link "Cards - (List)", to: card_path(@conn, :index, @user)
-                       li =link "Cards - (Images)", to: card_path(@conn, :image_index, @user)
+                       li =link "Cards - (List)", to: card_path(@conn, :index, @current_user)
+                       li =link "Cards - (Images)", to: card_path(@conn, :image_index, @current_user)
+                       li =link "Decks", to: deck_path(@conn, :index, @current_user)
                        li =link "Sign Out", to: session_path(@conn, :delete), method: :delete
                - else
                  li =link "sign in", to: session_path(@conn, :new)

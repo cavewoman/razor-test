@@ -1,0 +1,5 @@
+<h2>New Deck</h2>
+
+<%= render "form.html", Map.put(assigns, :action, deck_path(@conn, :create, @user)) %>
+
+<span><%= link "Back", to: deck_path(@conn, :index, @user) %></span>

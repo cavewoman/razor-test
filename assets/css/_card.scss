@@ -1,0 +1,29 @@
+.card-container {
+  clear: both;
+  margin-top: 1em;
+
+  .image-container {
+    display: inline-block;
+  }
+
+  .info-container {
+    display: inline-block;
+    width: 45%;
+  }
+}
+
+.card-back {
+  float: right;
+}
+
+.card-title {
+  display: inline;
+}
+
+.cards-header-title {
+  display: inline-block;
+}
+
+.btn-new-card {
+  float: right;
+}

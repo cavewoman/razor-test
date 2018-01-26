@@ -20,4 +20,8 @@ import "phoenix_html"
 
 // import socket from "./socket"
 import razor_test from "./razor_test"
+import decks from "./decks"
 razor_test()
+decks()
+
+import * as _ from "lodash"

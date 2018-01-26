@@ -1,0 +1,9 @@
+<div class='add-card-container'>
+  <select class="form-control card-select">
+    <%= for card <- @cards do %>
+      <option value="<%= card.id %>"><%=card.name%></option>
+    <% end %>
+  </select>
+  <input type="hidden" name="csrf_token" value="<%= csrf_token() %>"/>
+  <div class="btn btn-default add-card-to-deck-btn">Add Card</div>
+</div>
