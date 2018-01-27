@@ -2,10 +2,8 @@
     color: $gray-light;
 }
 
-footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+.page-container {
+  margin-top: 6em;
 }
 
 .navbar-header {
@@ -29,5 +27,25 @@ footer {
 .visit-your-card {
   a {
     color: white;
+  }
+}
+
+.stats-container {
+  display: flex;
+
+  .stats {
+    flex: 1;
+    text-align: center;
+
+    a {
+      color: #777;
+      font-size: 20px;
+      text-decoration: none;
+    }
+
+    .stat-item {
+      font-size: 63px;
+    }
+
   }
 }

@@ -10,8 +10,20 @@ defmodule RazorTestWeb.PageController do
   import RazorTest.Controllers.Helpers.AuthHelper
 
   def index(conn, _params) do
+    user = conn.assigns.current_user
+    cards =
+      user
+      |> Ecto.assoc(:cards)
+      |> Ecto.Query.order_by(desc: :name)
+      |> Repo.all()
+    decks =
+        user
+        |> Ecto.assoc(:decks)
+        |> Ecto.Query.order_by(desc: :name)
+        |> Repo.all()
+    total_card_count = Cards.list_cards_by_name |> length
     conn
-    |> render("index.html", user: conn.assigns.current_user)
+    |> render("index.html", user: conn.assigns.current_user, my_cards: cards, my_decks: decks, total_cards: total_card_count)
   end
 
   def all_cards(conn, _params) do
