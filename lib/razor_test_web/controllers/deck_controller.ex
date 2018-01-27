@@ -97,6 +97,14 @@ defmodule RazorTestWeb.DeckController do
       {:error, error} ->
         json(conn, %{error: error})
     end
+  end
 
+  def delete_card(conn, %{"card_id" => card_id, "deck_id" => deck_id}) do
+    case Decks.delete_card_from_deck(card_id, deck_id) do
+      {:ok, cards} ->
+        json(conn, %{cards: cards})
+      {:error, error} ->
+        json(conn, %{error: error})
+    end
   end
 end

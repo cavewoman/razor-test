@@ -6,8 +6,12 @@
 
 <div class="deck-cards-container">
   <%= for card <- @deck_cards do %>
-    <a href="<%= card_path(@conn, :show, @user, card)%>">
-    <img src="<%= card.small_image_uri %>" class="image-index-image">
+    <div class="deck-card-container">
+      <a href="<%= card_path(@conn, :show, @user, card)%>" class="deck-card-image">
+        <img src="<%= card.small_image_uri %>" class="image-index-image" />
+      </a>
+      <img src="<%= static_path(@conn, "/images/delete-icon-red-24x24.png") %>" class="delete-icon card-<%= card.id %>"/>
+    </div>
   <% end %>
 </div>
 

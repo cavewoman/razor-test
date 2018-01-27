@@ -56,3 +56,15 @@
   }
 
 }
+
+.deck-card-container {
+  display: inline-block;
+  position: relative;
+
+  .delete-icon {
+    position: absolute;
+    top: 25px;
+    right: 14px;
+  }
+
+}

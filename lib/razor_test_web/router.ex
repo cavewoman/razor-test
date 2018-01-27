@@ -48,6 +48,7 @@ defmodule RazorTestWeb.Router do
       get "/card-images", CardController, :image_index
       resources "/decks", DeckController
       post "/add-card-to-deck", DeckController, :add_card
+      post "/delete-card-from-deck", DeckController, :delete_card
     end
   end
 

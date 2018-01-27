@@ -131,12 +131,45 @@ defmodule RazorTest.Decks do
     end
   end
 
+  def delete_card_from_deck(card_id, deck_id) do
+    {deck_id, _} = Integer.parse(deck_id)
+    {card_id, _} = Integer.parse(card_id)
+    record_id = get_deck_card_record_id(card_id, deck_id)
+    case delete_deck_card(record_id) do
+      {:ok, result} ->
+        case get_cards_for_deck(deck_id) do
+          {:ok, result} ->
+            cols = Enum.map result.columns, &(String.to_atom(&1))
+            cards = Enum.map result.rows, fn(row) -> Enum.into(Enum.zip(cols, row), %{}) end
+            {:ok, cards}
+          {:error, error} ->
+            {:error, error}
+        end
+      {:error, error} ->
+          {:error, error}
+    end
+  end
+
   defp insert_card_into_deck(card_id, deck_id) do
     Repo.query('
     INSERT INTO card_decks
         (card_id, deck_id)
     VALUES
         ($1, $2)', [card_id, deck_id])
+  end
+
+  defp delete_deck_card(record_id) do
+    Repo.query('DELETE FROM "card_decks"
+    WHERE id=$1', [record_id])
+  end
+
+  defp get_deck_card_record_id(card_id, deck_id) do
+    record = Repo.query!('SELECT *
+    FROM "card_decks" AS c0
+    WHERE c0."card_id"=$1
+    AND c0."deck_id"=$2
+    LIMIT 1', [card_id, deck_id])
+    record.rows |> List.first |> List.first
   end
 
   def get_cards_for_deck_id(deck_id) do
