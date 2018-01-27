@@ -12,3 +12,22 @@ footer {
   display: inline-block;
   float: right;
 }
+
+.generic-card-container {
+  display: flex;
+
+  .generic-card-image-container {
+    flex: 1;
+    margin-right: 1em;
+  }
+
+  .generic-card-action-container {
+    flex: 1;
+  }
+}
+
+.visit-your-card {
+  a {
+    color: white;
+  }
+}

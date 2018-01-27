@@ -1,0 +1,15 @@
+.generic-card-container
+  .generic-card-image-container
+    img src="#{@card.normal_image_uri}" class="generic-card-image"
+  .generic-card-action-container
+    = if @owned do
+      h2.generic-card-message You own this card
+      .visit-your-card.btn.btn-primary
+        =link "Visit Card", to: card_path(@conn, :show, @user, @card)
+    - else
+      h2.generic-card-message You do not own this card.
+      .add-generic-card-btn.btn.btn-primary Add Card
+      input type="hidden" name="csrf_token" value="#{csrf_token()}"
+      input type="hidden" name="card_name" value="#{@card.name}"
+      input type="hidden" name="user_id" value="#{@user.id}"
+      input type="hidden" name="scryfall_uri" value="#{@card.scryfall_json_uri}"

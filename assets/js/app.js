@@ -21,7 +21,9 @@ import "phoenix_html"
 // import socket from "./socket"
 import razor_test from "./razor_test"
 import decks from "./decks"
+import generic_cards from "./generic_cards"
 razor_test()
 decks()
+generic_cards()
 
 import * as _ from "lodash"

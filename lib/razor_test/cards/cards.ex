@@ -21,6 +21,10 @@ defmodule RazorTest.Cards do
     Repo.all(Card)
   end
 
+  def list_cards_by_name do
+    Repo.all(from(c in Card, distinct: c.name, order_by: [c.name]))
+  end
+
   @doc """
   Gets a single card.
 
@@ -100,5 +104,26 @@ defmodule RazorTest.Cards do
   """
   def change_card(%Card{} = card, user) do
     Card.changeset(card, %{user_id: user.id})
+  end
+
+  def user_owns_card?(user, card_name) do
+    user_ids = user_ids_by_card_name(card_name)
+    owned = Enum.member?(user_ids, user.id)
+  end
+
+  defp user_ids_by_card_name(name) do
+    Repo.all(from(c in Card,
+    where: c.name == ^name,
+    select: c.user_id))
+  end
+
+  def get_card_by_id(id) do
+    Repo.get!(Card, id)
+  end
+
+  def get_card_by_name_and_user(name, user) do
+    Repo.all(from(c in Card,
+    where: c.user_id == ^user.id and c.name == ^name))
+    |> List.first
   end
 end

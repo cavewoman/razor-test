@@ -25,6 +25,7 @@ html lang="en"
             .card-nav.navbar-brand =link "My Cards", to: card_path(@conn, :index, @current_user)
             .card-image-nav.navbar-brand =link "Card Images", to: card_path(@conn, :image_index, @current_user)
             .deck-nav.navbar-brand =link "My Decks", to: deck_path(@conn, :index, @current_user)
+            .all-cards-nav.navbar-brand =link "All Cards", to: "/all-cards"
           .collapse.navbar-collapse
             ul.nav.navbar-nav.navbar-right
                = if @current_user do

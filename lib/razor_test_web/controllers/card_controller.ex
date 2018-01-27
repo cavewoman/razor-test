@@ -41,14 +41,20 @@ defmodule RazorTestWeb.CardController do
     render conn, "new.html", changeset: changeset, user: user
   end
 
-  def create(conn, %{"card" => card_params}) do
+  def create(conn, params) do
+    card_params = params["card"]
     user = conn.assigns[:requested_user]
     updated_params = updated_params(card_params, user)
     case Cards.create_card(updated_params) do
       {:ok, card} ->
-        conn
-        |> put_flash(:info, "Card created successfully.")
-        |> redirect(to: card_path(conn, :show, user, card))
+        if (params["json_return"]) do
+          json(conn, %{redirect_url: card_path(conn, :show, user, card)})
+        else
+          conn
+          |> put_flash(:info, "Card created successfully.")
+          |> redirect(to: card_path(conn, :show, user, card))
+        end
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset, user: user)
     end

@@ -43,6 +43,8 @@ defmodule RazorTestWeb.Router do
   scope "/", RazorTestWeb do
     pipe_through :protected
     get "/", PageController, :index
+    get "/all-cards", PageController, :all_cards
+    get "/generic-card/:card_id/:card_name", PageController, :card
     scope "/:user_id" do
       resources "/cards", CardController
       get "/card-images", CardController, :image_index
