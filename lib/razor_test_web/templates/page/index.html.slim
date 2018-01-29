@@ -1,9 +1,9 @@
 .stats-container
   .my-cards-stats.stats
-    .stat-item #{length(@my_cards)}
+    .stat-item #{@my_cards}
     .stat-title = link "My Cards", to: card_path(@conn, :index, @user)
   .my-deck-stats.stats
-    .stat-item #{length(@my_decks)}
+    .stat-item #{@my_decks}
     .stat-title = link "My Decks", to: deck_path(@conn, :index, @user)
   .all-card-stats.stats
     .stat-item #{@total_cards}

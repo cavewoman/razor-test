@@ -15,7 +15,7 @@ defmodule RazorTestWeb.CardController do
     cards =
       user
       |> Ecto.assoc(:cards)
-      |> Ecto.Query.order_by(desc: :name)
+      |> Ecto.Query.order_by(asc: :name)
       |> Repo.all()
 
     render conn, "index.html", cards: cards, user: user
@@ -44,7 +44,7 @@ defmodule RazorTestWeb.CardController do
   def create(conn, params) do
     card_params = params["card"]
     user = conn.assigns[:requested_user]
-    updated_params = updated_params(card_params, user)
+    updated_params = Cards.updated_params(card_params, user)
     case Cards.create_card(updated_params) do
       {:ok, card} ->
         if (params["json_return"]) do
@@ -97,49 +97,15 @@ defmodule RazorTestWeb.CardController do
     |> redirect(to: card_path(conn, :index, user))
   end
 
-  defp get_info(name) do
-    url_name = name |> String.downcase() |> String.replace(" ", "+")
-    url = "https://api.scryfall.com/cards/named?exact=#{url_name}"
-
-    response = HTTPoison.get!(url)
-    Poison.decode!(response.body)
+  def prime_cards(conn, params) do
+    user = conn.assigns[:requested_user]
+    render(conn, "prime_cards.html", user: user)
   end
 
-  defp updated_params(params, user) do
-    if params["name"] do
-      info = get_info(params["name"])
-      params
-        |> Map.put("user_id", user.id)
-        |> Map.put("colors", info["colors"])
-        |> Map.put("multiverse_ids", info["multiverse_ids"])
-        |> Map.put("scryfall_json_uri", info["uri"])
-        |> Map.put("scryfall_uri", info["scryfall_uri"])
-        |> Map.put("type", info["type_line"])
-        |> Map.put("flavor_text", info["flavor_text"])
-        |> Map.put("oracle_text", info["oracle_text"])
-        |> Map.put("mana_cost", info["mana_cost"])
-        |> Map.put("set_name", info["set_name"])
-        |> Map.put("rulings_uri", info["rulings_uri"])
-        |> Map.put("rarity", info["rarity"])
-        |> Map.put("small_image_uri", info["image_uris"]["small"])
-        |> Map.put("normal_image_uri", info["image_uris"]["normal"])
-        |> Map.put("large_image_uri", info["image_uris"]["large"])
-        |> Map.put("png_image_uri", info["image_uris"]["png"])
-        |> Map.put("art_crop_image_uri", info["image_uris"]["art_crop"])
-        |> Map.put("border_crop_image_uri", info["image_uris"]["border_crop"])
-        |> maybeAddPowerAndToughness(info)
-    else
-      params
-    end
+  def mass_import(conn, params) do
+    user = conn.assigns[:requested_user]
+    Cards.mass_import(user)
+    json(conn, %{ok: "complete"})
   end
 
-  defp maybeAddPowerAndToughness(params, info) do
-    if (info["power"]) do
-      params
-        |> Map.put("power", String.to_integer(info["power"]))
-        |> Map.put("toughness", String.to_integer(info["toughness"]))
-    else
-      params
-    end
-  end
 end

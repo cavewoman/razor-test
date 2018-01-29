@@ -14,13 +14,13 @@ defmodule RazorTestWeb.PageController do
     cards =
       user
       |> Ecto.assoc(:cards)
-      |> Ecto.Query.order_by(desc: :name)
       |> Repo.all()
+      |> length
     decks =
         user
         |> Ecto.assoc(:decks)
-        |> Ecto.Query.order_by(desc: :name)
         |> Repo.all()
+        |> length
     total_card_count = Cards.list_cards_by_name |> length
     conn
     |> render("index.html", user: conn.assigns.current_user, my_cards: cards, my_decks: decks, total_cards: total_card_count)

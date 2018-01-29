@@ -61,6 +61,6 @@ defmodule RazorTest.Cards.Card do
     :border_crop_image_uri,
     :user_id
     ])
-    |> validate_required([:name, :user_id])
+    |> validate_required([:name])
   end
 end

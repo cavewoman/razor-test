@@ -48,6 +48,8 @@ defmodule RazorTestWeb.Router do
     scope "/:user_id" do
       resources "/cards", CardController
       get "/card-images", CardController, :image_index
+      get "/prime-cards", CardController, :prime_cards
+      get "/mass-import-cards", CardController, :mass_import
       resources "/decks", DeckController
       post "/add-card-to-deck", DeckController, :add_card
       post "/delete-card-from-deck", DeckController, :delete_card

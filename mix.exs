@@ -47,7 +47,8 @@ defmodule RazorTest.Mixfile do
       {:ex_machina, "~> 2.1", only: :test},
       {:coherence, "~> 0.5"},
       {:httpoison, "~> 0.12"},
-      {:json, "~> 1.0"}
+      {:json, "~> 1.0"},
+      {:csvlixir, "~> 2.0.3"}
    ]
   end
 

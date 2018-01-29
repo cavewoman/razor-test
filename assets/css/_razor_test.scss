@@ -1,5 +1,5 @@
 .jumbotron {
-    color: $gray-light;
+  color: $gray-light;
 }
 
 .page-container {
@@ -46,6 +46,22 @@
     .stat-item {
       font-size: 63px;
     }
-
   }
+}
+
+.import-all-cards {
+  position: absolute;
+  top: 10%;
+  left: 45%;
+}
+
+#loadContainer {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 56px;
+  height: 59px;
+  margin-left: -28px;
+  margin-top: -29px;
+  display: none;
 }
