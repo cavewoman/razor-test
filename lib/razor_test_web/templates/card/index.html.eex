@@ -1,38 +1,46 @@
 <div class="cards-header">
-  <h2 class="cards-header-title">Cards</h2>
+  <h2 class="cards-header-title">My Cards</h2>
   <span><%= link "New Card", to: card_path(@conn, :new, @user), class: "btn-new-card btn btn-default btn-primary" %></span>
 </div>
 
-<table class="table">
+<table class="my-cards-table table">
   <thead>
-    <tr>
+    <tr class="my-cards-header-row">
       <th>Name</th>
       <th>Colors</th>
       <th>Type</th>
+      <th>Mana Cost</th>
+      <th>Rarity</th>
+      <th>Set Name</th>
       <th>Number Owned</th>
       <th>Number Wanted</th>
       <th>Power</th>
       <th>Toughness</th>
-      <th>Set Name</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for card <- @cards do %>
-    <tr>
+    <tr class="<%= getRowColor(card.colors, card.name) %>">
       <td><%= link card.name, to: card_path(@conn, :show, @user, card) %></td>
       <td><%= card.colors %></td>
       <td><%= card.type %></td>
+      <td><%= card.mana_cost %></td>
+      <td><%= card.rarity %></td>
+      <td><%= card.set_name %></td>
       <td><%= card.number_owned %></td>
       <td><%= card.number_wanted %></td>
       <td><%= card.power %></td>
       <td><%= card.toughness %></td>
-      <td><%= card.set_name %></td>
 
-      <td class="text-right">
-        <span><%= link "Edit", to: card_path(@conn, :edit, @user, card), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: card_path(@conn, :delete, @user, card), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      <td class="card-actions text-right">
+        <a href="<%= card_path(@conn, :edit, @user, card) %>" >
+            <img src="<%= static_path(@conn, "/images/edit-icon.png") %>"/>
+        </a>
+        <a href="<%= card_path(@conn, :delete, @user, card) %>" >
+            <img src="<%= static_path(@conn, "/images/delete-icon-red-24x24.png") %>"/>
+        </a>
       </td>
     </tr>
 <% end %>

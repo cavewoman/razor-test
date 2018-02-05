@@ -25,6 +25,7 @@ defmodule RazorTestWeb.CardControllerTest do
                            %{
                              name: "Island",
                              number_owned: 3,
+                             colors: ["U"]
                            }))
       |> Repo.insert!()
 

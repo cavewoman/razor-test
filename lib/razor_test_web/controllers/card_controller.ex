@@ -26,7 +26,7 @@ defmodule RazorTestWeb.CardController do
     cards =
       user
       |> Ecto.assoc(:cards)
-      |> Ecto.Query.order_by(desc: :name)
+      |> Ecto.Query.order_by(asc: :name)
       |> Repo.all()
     render(conn, "image_index.html", cards: cards, user: user)
   end

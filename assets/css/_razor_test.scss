@@ -65,3 +65,11 @@
   margin-top: -29px;
   display: none;
 }
+
+.card-actions {
+  display: flex;
+  a {
+    flex: 1;
+    margin-left: 0.25em;
+  }
+}

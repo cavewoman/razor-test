@@ -27,3 +27,44 @@
 .btn-new-card {
   float: right;
 }
+
+.my-cards-table {
+  tr {
+    color: #fff;
+  }
+  a {
+    color: #fff;
+  }
+}
+.green-card {
+  background-color: rgba(4, 103, 52, 0.68);
+}
+
+.black-card {
+  background-color: #8d8a84;
+}
+
+.red-card {
+  background-color: #c60c31;
+}
+
+.blue-card {
+  background-color: rgba(15, 85, 150, 0.72);
+}
+
+.white-card {
+  background-color: #d1c6ad;
+}
+
+.multicolor-card {
+  background-color: #d6be75;
+}
+
+.unknown-color-card {
+  background-color: #c9d2d8;
+}
+
+.my-cards-header-row {
+  background-color: #fff !important;
+  color: #000 !important;
+}
