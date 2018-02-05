@@ -38,8 +38,8 @@
         <a href="<%= card_path(@conn, :edit, @user, card) %>" >
             <img src="<%= static_path(@conn, "/images/edit-icon.png") %>"/>
         </a>
-        <a href="<%= card_path(@conn, :delete, @user, card) %>" >
-            <img src="<%= static_path(@conn, "/images/delete-icon-red-24x24.png") %>"/>
+        <a data-confirm="Are you sure?" data-csrf="<%= csrf_token() %>" data-method="delete" data-to="<%= card_path(@conn, :delete, @user, card) %>" href="#" rel="nofollow">
+          <img src="<%= static_path(@conn, "/images/delete-icon-red-24x24.png") %>"/>
         </a>
       </td>
     </tr>
